@@ -7,7 +7,7 @@ class Book {
 }
 
 class UI {
-    addBookToList = function(book){
+    addBookToList(book){
         const list = document.getElementById('book-list');
         //create tr element
         const row = document.createElement('tr');
@@ -20,7 +20,7 @@ class UI {
         `;
         list.appendChild(row);
     }
-    showAlert = function(message, className) {
+    showAlert(message, className) {
         //Create div
         const div = document.createElement('div');
         //Add classes
@@ -38,12 +38,12 @@ class UI {
             document.querySelector('.alert').remove();
         }, 3000);
     }
-    clearFields = function(){
+    clearFields(){
         document.getElementById('title').value = '';
         document.getElementById('author').value = '';
         document.getElementById('isbn').value = '';
     }
-    deleteBook = function(target){
+    deleteBook(target){
         if (target.className === 'delete') {
             target.parentElement.parentElement.remove();
         } 
@@ -60,6 +60,7 @@ class Store {
         }
         return books;
     }
+
     static displayBooks(){
         const books = Store.getBooks();
 
@@ -70,11 +71,13 @@ class Store {
             ui.addBookToList(book);
         });
     }
+
     static addBook(book){
         const books = Store.getBooks();
         books.push(book);   
         localStorage.setItem('books', JSON.stringify(books));
     }
+    
     static removeBook(isbn) {
         const books = Store.getBooks();
     

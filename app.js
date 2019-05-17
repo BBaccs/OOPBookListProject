@@ -47,53 +47,54 @@ UI.prototype.clearFields = function(){
 
 UI.prototype.deleteBook = function(target){
  if (target.className === 'delete') {
-    target.parentElement.parentElement.remove();
-} 
+        target.parentElement.parentElement.remove();
+    } 
 }
 
 
 function Store(){}
 
 Store.prototype.getBooks = function(){
-let books;
-if (localStorage.getItem('books') === null) {
-    books = [];
-} else {
-    books = JSON.parse(localStorage.getItem('books'));
-}
-return books;
+    let books;
+    if (localStorage.getItem('books') === null) {
+        books = [];
+    } else {
+        books = JSON.parse(localStorage.getItem('books'));
+    }
+    return books;
 }
 
 Store.prototype.displayBooks = function(){
-const store = new Store();
-const books = store.getBooks();
+    const store = new Store();
+    const books = store.getBooks();
+    console.log(books)
+    books.forEach(function(book) {
+        const ui = new UI;
 
-books.forEach(function(book) {
-    const ui = new UI;
-
-    //add book to UI
-    ui.addBookToList(book);
-});
+        //add book to UI
+        ui.addBookToList(book);
+    });
+    console.log(books)
 }
 
 Store.prototype.addBook = function(book){
-const store = new Store();
-const books = store.getBooks();
-books.push(book);   
+    const store = new Store();
+    const books = store.getBooks();
+    books.push(book);   
     localStorage.setItem('books', JSON.stringify(books));
 }
 
 Store.prototype.removeBook = function(isbn) {
-const store = new Store();
-const books = store.getBooks();
+    const store = new Store();
+    const books = store.getBooks();
 
-books.forEach(function(book, index){
-    if(book.isbn === isbn) {
-      books.splice(index, 1);
-    }
-});
+    books.forEach(function(book, index){
+        if(book.isbn === isbn) {
+        books.splice(index, 1);
+        }
+    });
 
-localStorage.setItem('books', JSON.stringify(books));
+    localStorage.setItem('books', JSON.stringify(books));
 }
 
 
@@ -101,8 +102,8 @@ localStorage.setItem('books', JSON.stringify(books));
 
 //Check local storage for books when page loads
 document.addEventListener('DOMContentLoaded', function(){
-const store = new Store();
-store.getBooks();
+    const store = new Store();
+    store.displayBooks();
 });
 
 //Add books to list
@@ -120,7 +121,7 @@ const book = new Book(title, author, isbn);
 const ui = new UI();
 
  //Instantiate Store
- const store = new Store();
+ const store = new Store(book);
 
 //Validate
 if (title === '' || author === '' || isbn === '') {
@@ -144,9 +145,9 @@ e.preventDefault();
 });
 
 document.getElementById('book-list').addEventListener('click', function(e){
-const ui = new UI();
-const store = new Store();
-ui.deleteBook(e.target);
-// Remove from LS
-store.removeBook(e.target.parentElement.previousElementSibling.textContent);
+    const ui = new UI();
+    const store = new Store();
+    ui.deleteBook(e.target);
+    // Remove from LS
+    store.removeBook(e.target.parentElement.previousElementSibling.textContent);
 });

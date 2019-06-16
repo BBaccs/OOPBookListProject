@@ -1,5 +1,6 @@
 # OOPBookListProject
-Built during an online course
+Built during an online course.
+
 Never forgot the books you read, what could be more useful!?
 
 Branches:
